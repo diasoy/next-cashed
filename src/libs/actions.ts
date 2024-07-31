@@ -73,3 +73,58 @@ export const getDataCategory = async (query: string) => {
     return { message: "Failed to fetch data" };
   }
 };
+
+export const deleteCategory = async (id: number) => { 
+  try {
+    await prisma.category.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    return { message: "Failed to delete category" };
+  }
+  revalidatePath("/dashboard/categories");
+  redirect("/dashboard/categories");
+}
+
+export const getCategoryById = async (id: number) => {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id },
+    });
+    return category;
+  } catch (error) {
+    console.error(error);
+    return { message: "Failed to fetch category" };
+  }
+};
+
+export const updateCategory = async (id: number, formData: FormData) => {
+  try {
+    const validatedFields = CategorySchema.safeParse(
+      Object.fromEntries(formData.entries())
+    );
+
+    if (!validatedFields.success) {
+      return {
+        error: validatedFields.error.flatten().fieldErrors,
+      };
+    }
+
+    await prisma.category.update({
+      where: { id },
+      data: {
+        name: formData.get('name') as string,
+        active: formData.get('active') === 'on',
+      },
+    });
+
+    revalidatePath("/dashboard/categories");
+    redirect("/dashboard/categories"); 
+
+  } catch (error) {
+    console.error(error);
+    return { message: "Failed to update category" };
+  }
+};

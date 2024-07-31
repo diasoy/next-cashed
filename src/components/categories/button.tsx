@@ -1,3 +1,4 @@
+import { deleteCategory } from "@/libs/actions";
 import Link from "next/link";
 
 export function CreateCategory() {
@@ -8,9 +9,10 @@ export function CreateCategory() {
   );
 }
 
-export function DeleteCategory() {
+export function DeleteCategory({id}: {id: number}) {
+  const handleDelete = deleteCategory.bind(null, id);
   return (
-    <form action="">
+    <form action={handleDelete}>
       <button className="btn btn-error">Delete</button>
     </form>
   );
