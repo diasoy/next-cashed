@@ -1,19 +1,37 @@
-import clsx from "clsx";
+import { deleteCategory, deleteProduct } from "@/libs/actions";
+import Link from "next/link";
+import { FaTrash } from "react-icons/fa";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+export function CreateCategory() {
+  return (
+    <Link href="/dashboard/categories/create" className="btn btn-primary">
+      Create Category
+    </Link>
+  );
 }
 
-export function Button({ children, className, ...rest }: ButtonProps) {
+export function DeleteCategory({id}: {id: number}) {
+  const handleDelete = deleteCategory.bind(null, id);
   return (
-    <button
-      {...rest}
-      className={clsx(
-        "flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
-        className
-      )}
-    >
-      {children}
-    </button>
+    <form action={handleDelete}>
+      <button className="btn btn-error"><FaTrash /></button>
+    </form>
+  );
+}
+
+export function CreateProduct() {
+  return (
+    <Link href="/dashboard/products/create" className="btn btn-primary">
+      Create Product
+    </Link>
+  );
+}
+
+export function DeleteProduct({id}: {id: number}) {
+  const handleDelete = deleteProduct.bind(null, id);
+  return (
+    <form action={handleDelete}>
+      <button className="btn btn-error"><FaTrash /></button>
+    </form>
   );
 }

@@ -1,5 +1,4 @@
-import { Button } from "@/components/button";
-import { CreateCategory } from "@/components/categories/button";
+import { CreateCategory } from "@/components/button";
 import { CategoryList } from "@/components/categories/table";
 import React from "react";
 
@@ -11,6 +10,7 @@ const CategoriesPage = ({
   const query = searchParams?.query || "";
   return (
     <div>
+      <h1 className="font-bold text-2xl mb-8">Category Page</h1>
       <div className="flex justify-between">
         <label className="input input-bordered flex items-center gap-2">
           <input type="text" className="grow" placeholder="Search" />

@@ -40,5 +40,6 @@ async function seedCategories() {
   await connection.end();
 }
 
+
 seedCategories().catch(console.error);
 seedUsers().catch(console.error);
